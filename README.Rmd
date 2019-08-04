@@ -73,7 +73,7 @@ filter(lowes, !(state %in% c("HI", "AK"))) %>%
   ) -> pts
 ```
 
-```{r points-map, fig.width=1000/72, fig.height=500/72}
+```{r points-map, fig.width=1000/72, fig.height=500/72, cache=TRUE}
 ggplot() +
   geom_sf(data = usa_sf("longlat"), fill = ft_cols$gray) +
   geom_sf(data = pts, size = 0.5, alpha = 1/2, color = ft_cols$yellow) +
@@ -98,5 +98,13 @@ count(lowes, county, state, sort=TRUE) %>%
   knitr::kable()
 ```
 
+Assuming $17/hr (~35K/yr) and no same-store re-hiring, ~**`r scales::dollar(nrow(lowes) * 35380)`** annual wages decrease across the whole list and for the top 10 counties:
+
+```{r sal-sum}
+count(lowes, county, state, sort=TRUE) %>% 
+  mutate(wages_lost = scales::dollar(n * 35380)) %>% 
+  top_n(10, wt = n) %>% 
+  knitr::kable(align = "llrr")
+```
 
 

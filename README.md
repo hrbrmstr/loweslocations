@@ -137,3 +137,30 @@ count(lowes, county, state, sort=TRUE) %>%
 | Franklin County       | OH    |  9 |
 | Hillsborough County   | FL    |  9 |
 | Mecklenburg County    | NC    |  9 |
+
+Assuming $17/hr (\~35K/yr) and no same-store re-hiring,
+\~**$61,030,500** annual wages decrease across the whole list and for
+the top 10 counties:
+
+``` r
+count(lowes, county, state, sort=TRUE) %>% 
+  mutate(wages_lost = scales::dollar(n * 35380)) %>% 
+  top_n(10, wt = n) %>% 
+  knitr::kable(align = "llrr")
+```
+
+| county                | state |  n | wages\_lost |
+| :-------------------- | :---- | -: | ----------: |
+| Maricopa County       | AZ    | 21 |    $742,980 |
+| Los Angeles County    | CA    | 20 |    $707,600 |
+| Harris County         | TX    | 18 |    $636,840 |
+| Clark County          | NV    | 13 |    $459,940 |
+| Riverside County      | CA    | 12 |    $424,560 |
+| Tarrant County        | TX    | 11 |    $389,180 |
+| Bexar County          | TX    | 10 |    $353,800 |
+| San Bernardino County | CA    | 10 |    $353,800 |
+| Allegheny County      | PA    |  9 |    $318,420 |
+| Dallas County         | TX    |  9 |    $318,420 |
+| Franklin County       | OH    |  9 |    $318,420 |
+| Hillsborough County   | FL    |  9 |    $318,420 |
+| Mecklenburg County    | NC    |  9 |    $318,420 |
